@@ -372,7 +372,8 @@
 //   });
 // });
 
-// app.listen(port, () => console.log(`Server running on port ${port}`));const express = require("express");
+// app.listen(port, () => console.log(`Server running on port ${port}`));
+const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const cors = require("cors");
