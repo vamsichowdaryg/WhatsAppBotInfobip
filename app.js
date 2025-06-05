@@ -810,7 +810,7 @@ async function sendWhatsAppMessageInfobip(to_number, message_text) {
   const payload = {
     messages: [
       {
-        from: INFOBIP_WHATSAPP_SENDER_NUMBER, // This is the 'from' field Infobip is complaining about
+        from: +447860099299, // This is the 'from' field Infobip is complaining about
         to: to_number,
         message: {
           text: message_text,
