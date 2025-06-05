@@ -385,9 +385,9 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-const INFOBIP_API_BASE_URL = "https://lqdxxw.api.infobip.com";
+const INFOBIP_API_BASE_URL = "https://g9ln56.api.infobip.com";
 const INFOBIP_API_KEY =
-  "2c69ef4d503d932281934d58471e70ac-1a8d5ab1-1489-4947-b277-7d4fb15468b7";
+  "c82c0a67289498dd25b2395b4fab7a65-13749d80-dbfa-4899-bb11-0229ce8ca0a6";
 const INFOBIP_WHATSAPP_SENDER_NUMBER = "+447860099299"; // Ensure this has '+' and is your registered sender number
 
 const DIRECT_LINE_BASE_URL =
