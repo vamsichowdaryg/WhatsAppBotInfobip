@@ -779,9 +779,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// --- Configuration Variables ---
-// IMPORTANT: For production, these should ideally come from process.env variables (environment variables)
-// rather than being hardcoded directly in the file.
+
 const INFOBIP_API_BASE_URL = "https://lqdxxw.api.infobip.com";
 const INFOBIP_API_KEY =
   "2c69ef4d503d932281934d58471e70ac-1a8d5ab1-1489-4947-b277-7d4fb15468b7";
