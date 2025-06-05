@@ -780,12 +780,15 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // --- Configuration Variables ---
+// IMPORTANT: For production, these should ideally come from process.env variables (environment variables)
+// rather than being hardcoded directly in the file.
 const INFOBIP_API_BASE_URL = "https://lqdxxw.api.infobip.com";
 const INFOBIP_API_KEY =
   "2c69ef4d503d932281934d58471e70ac-1a8d5ab1-1489-4947-b277-7d4fb15468b7";
 const INFOBIP_WHATSAPP_SENDER_NUMBER = "+447860099299"; // Ensure this has '+' and is your registered sender number
 
 // --- DEBUG LOG: Check sender number immediately after declaration ---
+// THIS LOG MUST APPEAR IN YOUR SERVER'S CONSOLE/LOGS
 console.log("DEBUG: Configured INFOBIP_WHATSAPP_SENDER_NUMBER (at top level):", INFOBIP_WHATSAPP_SENDER_NUMBER);
 
 
@@ -809,7 +812,7 @@ async function sendWhatsAppMessageInfobip(to_number, message_text) {
   const payload = {
     messages: [
       {
-        from: INFOBIP_WHATSAPP_SENDER_NUMBER, // This is the 'from' in question
+        from: INFOBIP_WHATSAPP_SENDER_NUMBER, // This is the 'from' field Infobip is complaining about
         to: to_number,
         message: {
           text: message_text,
@@ -818,9 +821,9 @@ async function sendWhatsAppMessageInfobip(to_number, message_text) {
     ],
   };
 
-  // --- DEBUG LOG: Check the 'from' value within the payload before sending ---
+  // --- DEBUG LOG: Check the 'from' value within the payload BEFORE sending ---
+  // THIS LOG MUST APPEAR IN YOUR SERVER'S CONSOLE/LOGS
   console.log("DEBUG: Payload 'from' number before sending to Infobip:", payload.messages[0].from);
-
 
   const headers = {
     Authorization: `App ${INFOBIP_API_KEY}`,
@@ -829,8 +832,8 @@ async function sendWhatsAppMessageInfobip(to_number, message_text) {
   const url = `${INFOBIP_API_BASE_URL}/whatsapp/1/message/text`;
 
   try {
-    // Log the actual payload being sent
-    console.log("Infobip API call payload:", JSON.stringify(payload, null, 2));
+    // Log the entire payload being sent for comprehensive debugging
+    console.log("DEBUG: Infobip API call payload:", JSON.stringify(payload, null, 2));
 
     const response = await axios.post(url, payload, {
       headers: headers,
@@ -841,11 +844,11 @@ async function sendWhatsAppMessageInfobip(to_number, message_text) {
   } catch (error) {
     console.error(
       "Error sending Infobip WhatsApp message:",
-      // Try to access the validationErrors array and log its JSON string
+      // This part tries to extract and log the specific validation errors from Infobip
       JSON.stringify(error.response?.data?.requestError?.serviceException?.validationErrors, null, 2) ||
-      // Fallback to logging the whole data object if validationErrors isn't there
+      // Fallback to logging the entire error response data
       JSON.stringify(error.response?.data, null, 2) ||
-      // Finally, just log the error message
+      // Final fallback to generic error message
       error.message
     );
     throw error;
